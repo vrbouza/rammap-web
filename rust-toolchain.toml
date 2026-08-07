@@ -1,0 +1,6 @@
+# Stable only: no nightly, no -Z build-std, no SharedArrayBuffer — the same posture
+# sparrowhawk takes. rammap-core is edition 2024 and uses let-chains, so it needs
+# rustc >= 1.88; pinning the channel here rather than trusting a CI image to be current.
+[toolchain]
+channel = "stable"
+targets = ["wasm32-unknown-unknown"]

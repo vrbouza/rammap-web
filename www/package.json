@@ -1,0 +1,23 @@
+{
+    "name": "rammap-web",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "node --max-old-space-size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js serve",
+        "build": "node --max-old-space-size=8192 node_modules/@vue/cli-service/bin/vue-cli-service.js build"
+    },
+    "dependencies": {
+        "vue": "^3.5.13",
+        "vue3-dropzone": "^2.2.1",
+        "vuex": "^4.1.0"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "~5.0.8",
+        "@vue/cli-plugin-typescript": "~5.0.8",
+        "@vue/cli-service": "~5.0.8",
+        "@wasm-tool/wasm-pack-plugin": "^1.7.0",
+        "ts-loader": "^9.5.1",
+        "typescript": "~5.6.3",
+        "worker-loader": "^3.0.8"
+    }
+}

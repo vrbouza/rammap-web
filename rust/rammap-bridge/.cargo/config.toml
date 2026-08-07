@@ -1,0 +1,19 @@
+# Scoped to the wasm target, like sparrowhawk's rust/esm-bridge/.cargo/config.toml,
+# rather than a global [build] rustflags like orphos-bridge uses: that way host
+# `cargo check` and `cargo test` are unaffected.
+#
+# THIS FILE IS NOT OPTIONAL. Cargo reads .cargo/config.toml by walking up from the
+# invocation directory; a *dependency's* config is never consulted. rammap's own
+# .cargo/config.toml sets +simd128 for wasm32-unknown-unknown, and that applies only
+# inside its checkout. Without this file, rammap-core's v128 DP and chaining kernels
+# compile out and the browser silently runs the scalar fallbacks (~1.84x slower, by
+# rammap's own docs/wasm.md benchmarks).
+
+[target.wasm32-unknown-unknown]
+rustflags = [
+    "-C", "target-feature=+simd128",
+    # The 1 MB wasm-ld default stack is tight for align/dp/splice.rs (3.5 kLOC of
+    # deeply nested DP) and the recursive chain/extend paths on long reads. 8 MB is
+    # what esm-bridge uses and is noise against the 4 GB linear-memory budget.
+    "-C", "link-args=-zstack-size=8000000",
+]

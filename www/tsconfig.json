@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "strict": true,
+        "jsx": "preserve",
+        "importHelpers": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "useDefineForClassFields": true,
+        "sourceMap": true,
+        "baseUrl": ".",
+        "types": ["webpack-env"],
+        "paths": { "@/*": ["src/*"] },
+        "lib": ["ESNext", "DOM", "DOM.Iterable", "WebWorker"]
+    },
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
+    "exclude": ["node_modules", "src/pkg_rammap"]
+}

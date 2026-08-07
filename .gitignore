@@ -1,0 +1,32 @@
+# Rust build output
+rust/*/target/
+
+# wasm-pack output: pkg/ (nodejs target, for the Node harness) and pkg-web/ (web
+# target, for the browser). Note the glob: sparrowhawk's .gitignore lists `www/src/pkg`
+# only, which silently fails to ignore pkg_deacon and the rest — do not repeat that.
+rust/*/pkg*/
+www/src/pkg*/
+
+# Node
+node_modules/
+www/dist/
+
+# Generated fixtures. Regenerate with:
+#   node rust/rammap-bridge/tests/data/make-fixtures.mjs [--scale]
+rust/rammap-bridge/tests/data/*.fa
+rust/rammap-bridge/tests/data/*.fq
+
+# Local env files
+www/.env.local
+www/.env.*.local
+
+# Logs
+www/npm-debug.log*
+www/yarn-*.log*
+www/pnpm-debug.log*
+
+# Editors and OS
+.idea/
+.vscode/
+*.swp
+.DS_Store

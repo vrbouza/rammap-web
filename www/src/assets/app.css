@@ -1,0 +1,50 @@
+/* Plain CSS rather than Tailwind: the structure that matters for dropping this into
+   sparrowhawk is the worker pair, the store slice and the WasmPackPlugin block, not the
+   styling — sparrowhawk brings its own design system (Tailwind v4 + shadcn-vue), and
+   pulling a second copy in here would only have to be stripped out again. */
+:root {
+    --fg: #1a1a1a; --muted: #6b6b6b; --line: #d8d8d8;
+    --bg: #fbfbfb; --panel: #fff; --accent: #2f5d8a; --warn: #8a4b2f; --ok: #2f7a4b;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0; padding: 2rem; background: var(--bg); color: var(--fg);
+    font: 14px/1.5 ui-sans-serif, system-ui, sans-serif;
+}
+main { max-width: 62rem; margin: 0 auto; }
+h1 { font-size: 1.3rem; margin: 0 0 .25rem; font-weight: 600; }
+.sub { color: var(--muted); margin: 0 0 1.5rem; }
+.panel {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+    padding: 1rem; margin-bottom: 1rem;
+}
+.drop {
+    border: 1.5px dashed var(--line); border-radius: 6px; padding: 1.25rem;
+    text-align: center; cursor: pointer; color: var(--muted); background: var(--panel);
+}
+.drop:hover, .drop.over { border-color: var(--accent); color: var(--accent); }
+.drop.set { border-style: solid; color: var(--fg); }
+.row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end; }
+.row > label { display: flex; flex-direction: column; gap: .25rem; font-size: .85rem; }
+.checks { display: flex; gap: 1rem; flex-wrap: wrap; font-size: .85rem; }
+.checks label { display: flex; gap: .3rem; align-items: center; }
+select, input[type=number] {
+    font: inherit; padding: .3rem .4rem; border: 1px solid var(--line); border-radius: 4px;
+}
+button {
+    font: inherit; padding: .45rem 1rem; border-radius: 4px; border: 1px solid var(--accent);
+    background: var(--accent); color: #fff; cursor: pointer;
+}
+button.secondary { background: #fff; color: var(--accent); }
+button.danger { background: #fff; color: var(--warn); border-color: var(--warn); }
+button:disabled { opacity: .5; cursor: not-allowed; }
+progress { width: 100%; height: .5rem; }
+pre {
+    background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: .6rem;
+    max-height: 22rem; overflow: auto; font-size: 12px; margin: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre;
+}
+.log { color: var(--muted); font-size: 12px; max-height: 9rem; }
+.note { color: var(--muted); font-size: .8rem; }
+.warn { color: var(--warn); }
+.ok { color: var(--ok); }
