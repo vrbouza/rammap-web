@@ -4,10 +4,14 @@ A WebAssembly adaptation of [rammap](https://github.com/jwanglab/rammap), a pure
 minimap2-compatible mapper and aligner, following the pattern
 [sparrowhawk](https://github.com/bacpop/sparrowhawk) uses for its Rust bridges.
 
+This project is a quick example on how to use the [sparrowhawk](https://github.com/bacpop/sparrowhawk) project as example and guide for developing or (as in this case) adapting a scientific methodology that can work with WebAssemblym with the help of LLMs for the initial set up. Thus, the code here is mostly vibe-coded using Claude Code.
+
 rammap already compiled to wasm before this project existed — `rammap-core` ships an
 `AlignSession` and a demo page. What it could not do was produce output you could
 actually keep: no download, no SAM header, and no quality strings. This bridge closes
 those gaps while keeping upstream rammap untouched.
+
+Note: this is intented as an example, not as a proper adaptation to WebAssembly of rammap. 
 
 ## Status
 
@@ -77,11 +81,11 @@ node rust/rammap-bridge/scripts/dev-server-test.mjs   # the `npm run serve` path
 ```
 
 ## Running it
+You'll need the Rust toolchain and npm for this.
 
 ```sh
 npm --prefix www install       # once
 npm --prefix www run serve     # http://localhost:8080/
-npm --prefix www run build     # production build into www/dist
 ```
 
 `npm run serve` also compiles the Rust to wasm on the way, through `WasmPackPlugin` in
