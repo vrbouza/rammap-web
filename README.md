@@ -15,8 +15,8 @@ Note: this is intented as an example, not as a proper adaptation to WebAssembly 
 
 ## Status
 
-**Complete: verified byte-identical to the native CLI, in a browser, with results
-streamed to disk, index save/load, progress, and cancellation.**
+Verified byte-identical to the native CLI, in a browser, with results
+streamed to disk, index save/load, progress, and cancellation.
 
 | | rammap's own wasm demo | rammap-web |
 |---|---|---|
@@ -37,11 +37,6 @@ through its own Vuex store — the same actions the page dispatches — and prov
 browser output matches the Node harness byte for byte. There is no separate self-test
 page: the tests exercise what a user actually drives.
 
-That result is worth stating on its own: **rammap's wasm SIMD128 kernels produce
-exactly the same alignments as the native AVX2/AVX-512 backend**, across every preset
-tested. rammap claims this in its docs; as far as we can tell it had not been checked
-against the CLI end to end before.
-
 ## Layout
 
 Laid out like [sparrowhawk-web](https://github.com/bacpop/sparrowhawk): the root holds
@@ -60,25 +55,6 @@ Two deliberate differences from sparrowhawk-web, so they don't read as oversight
 There is **no `.gitmodules`**: sparrowhawk vendors its forked upstreams as submodules,
 whereas we pin `rammap-core` by git rev in `Cargo.toml`, leaving upstream untouched and
 nothing to keep in step. And there is **no deployment config** — nothing untested ships.
-
-## Build and test
-
-```sh
-sh rust/rammap-bridge/scripts/build.sh                      # both wasm targets
-node rust/rammap-bridge/tests/data/make-fixtures.mjs            # small fixtures
-node rust/rammap-bridge/tests/data/make-fixtures.mjs --scale    # ~85 MB-of-output fixtures
-
-cd rust/rammap-bridge && cargo test                         # parser property tests
-cargo check --target wasm32-unknown-unknown                 # fast wasm loop
-
-# Against the native CLI
-RAMMAP=/path/to/rammap sh rust/rammap-bridge/scripts/compare-native.sh
-
-# In a real browser, headless
-npm --prefix www run build
-node rust/rammap-bridge/scripts/browser-test.mjs      # production build
-node rust/rammap-bridge/scripts/dev-server-test.mjs   # the `npm run serve` path
-```
 
 ## Running it
 You'll need the Rust toolchain and npm for this.
@@ -211,7 +187,3 @@ the whole file has already been processed.
 Not achievable: preempting a single `align_and_format_query` call. One pathological long
 read under the `splice` preset can hold the worker for seconds, and only `terminate()`
 touches it.
-
-## Licence
-
-MIT, matching `rammap-core`. See `LICENSE`.
