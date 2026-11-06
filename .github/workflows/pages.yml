@@ -1,0 +1,66 @@
+name: deploy to github pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Only one deployment at a time; a newer push queues behind a running one
+# rather than cancelling it halfway through (GitHub's recommendation for Pages).
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - uses: jetli/wasm-pack-action@v0.4.0
+
+      # rust/rammap-bridge/.cargo/config.toml (+simd128) is picked up because
+      # wasm-pack runs cargo from inside the crate directory.
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "rust/rammap-bridge -> target"
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: www/package-lock.json
+
+      - uses: actions/configure-pages@v5
+
+      # vue.config.js already uses a relative publicPath and a flat output
+      # directory in production, so no sub-path setting is needed here.
+      - name: build
+        working-directory: www
+        run: |
+          npm ci
+          npm run build
+          find dist/ -name '*.map' -delete
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: www/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
