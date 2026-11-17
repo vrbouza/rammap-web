@@ -428,7 +428,7 @@ export class RammapAligner {
             this.post({
                 error:
                     `Out of memory: the wasm heap hit its 4 GB cap (${(heap / 1024 ** 3).toFixed(1)} GB used). ` +
-                    `This reference is too large for a 32-bit browser build — use the native rammap CLI.`,
+                    `This reference is too large for a 32-bit browser build. Use the native rammap CLI.`,
                 fatal: true,
             });
             return;

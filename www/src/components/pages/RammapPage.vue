@@ -70,8 +70,6 @@
         </div>
         <p class="note" style="margin:.75rem 0 0">
             The occurrence cap during index construction is uncapped, matching the CLI.
-            rammap's own web demo hardcodes 50&nbsp;000, which changes output on repetitive
-            references. Changing preset or output format re-maps without rebuilding the index.
         </p>
     </div>
 
